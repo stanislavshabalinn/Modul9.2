@@ -99,6 +99,7 @@ namespace Modul9._2
                 NumberEntered(number);
             }
 
+
             protected virtual void NumberEntered(int number)
             {
                 NumberEnteredEvent?.Invoke(number);
