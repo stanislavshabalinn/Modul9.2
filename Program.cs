@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 
-namespace Modul9._2
+namespace Module9
 {
     class Programm
     {
@@ -50,7 +50,7 @@ namespace Modul9._2
         public static void NameSorted(int number)
         {
             /// Задаем список из 5 фамилий
-            List <string>stringList = new List<string> { "Шабалин", "Муравьев", "Петяхин", "Кучумов", "Лебедев" };
+            List<string> stringList = new List<string> { "Шабалин", "Муравьев", "Петяхин", "Кучумов", "Лебедев" };
 
             switch (number)
             {
@@ -79,33 +79,41 @@ namespace Modul9._2
     /// <summary>
     /// Делегат
     /// </summary>
+    class NumberReader
+    {
+        public delegate void NumberEnteredDelegate(int number);
+        public event NumberEnteredDelegate NumberEnteredEvent;
 
-        class NumberReader
+        public void Read()
         {
-            public delegate void NumberEnteredDelegate(int number);
-            public event NumberEnteredDelegate NumberEnteredEvent;
+            Console.WriteLine("\nДля прямой сортировки выберите 1, для обратной сортировки выберите 2");
+            int number = Convert.ToInt32(Console.ReadLine());
 
-            public void Read()
-            {
-                Console.WriteLine("\nДля прямой сортировки выберите 1, для обратной сортировки выберите 2");
-                int number = Convert.ToInt32(Console.ReadLine());
+            ///Не корректный дип данных
+            if (number! == 1 && number! == 2) throw new FormatException();
 
-                ///Не корректный дип данных
-                if (number! == 1 && number! == 2) throw new FormatException();
+            /// число вне диапазона
+            if (number! < 1 | number! > 2) throw new ArgumentOutOfRangeException();
 
-                /// число вне диапазона
-                if (number! < 1 | number! > 2) throw new ArgumentOutOfRangeException();
+            NumberEntered(number);
+        }
 
-                NumberEntered(number);
-            }
-
-
-            protected virtual void NumberEntered(int number)
-            {
-                NumberEnteredEvent?.Invoke(number);
-            }
+        protected virtual void NumberEntered(int number)
+        {
+            NumberEnteredEvent?.Invoke(number);
         }
     }
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
